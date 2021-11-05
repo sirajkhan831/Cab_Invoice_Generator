@@ -8,17 +8,20 @@ package com.bridgelabz;
 public class Fare {
 
     /**
-     * This program generates fares for Cabs
+     * This program generates fares for Cabs.
      */
     private double fare;                // Stores the fare per ride.
     private double totalFare;           // Stores the total fare for all the rides combined.
     private int totalRides;              // Stores the total number of rides.
+    private boolean isPremium = false;    // Stores weather the customer is premium customer.
 
     public Fare(double distance, double minutes) {
         fareCalculator(distance, minutes);
     }
 
-    public Fare() {
+    public Fare(double distance, double minutes, boolean isPremium) {
+        this.isPremium = isPremium;
+        fareCalculator(distance, minutes);
     }
 
     /**
@@ -29,7 +32,13 @@ public class Fare {
         totalRides++;
         int MIN_FARE = 5;
         int PER_MINUTE = 1;
-        fare = ((distance * 10) + (PER_MINUTE * minutes) + MIN_FARE);
+        int PER_KM = 10;
+        if (isPremium) {
+            MIN_FARE = 20;
+            PER_MINUTE = 2;
+            PER_KM = 15;
+        }
+        fare = ((distance * PER_KM) + (PER_MINUTE * minutes) + MIN_FARE);
         totalFare += fare;
     }
 

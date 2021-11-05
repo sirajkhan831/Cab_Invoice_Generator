@@ -13,10 +13,10 @@ public class TestCases {
 
     @Test
     public void whenGivenMultipleRides_ifRequiredFarePerRide_shouldReturnEqual() {
-        Fare fare = new Fare(2,0);
-        Assert.assertEquals(fare.getFare(),25,0.5);
-        fare.bookCab(4,2);
-        Assert.assertEquals(fare.getFare(),47,0.5);
+        Fare fare = new Fare(2, 0);
+        Assert.assertEquals(fare.getFare(), 25, 0.5);
+        fare.bookCab(4, 2);
+        Assert.assertEquals(fare.getFare(), 47, 0.5);
     }
 
     @Test
@@ -40,5 +40,11 @@ public class TestCases {
         fare.bookCab(4, 2);
         fare.bookCab(6, 1);
         Assert.assertEquals(fare.averageFare(), 57, 0.5);
+    }
+
+    @Test
+    public void whenGivenPremiumRide_shouldReturnEqual() {
+        Fare fare = new Fare(5, 4, true);
+        Assert.assertEquals(fare.getFare(), 103, 0.1);
     }
 }
