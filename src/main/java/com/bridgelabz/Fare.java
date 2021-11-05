@@ -11,6 +11,7 @@ public class Fare {
      * This program generates fares for Cabs
      */
     private double totalFare;           // Stores the total fare for all the ride combined.
+    private int totalRides;
 
     public Fare(double distance, double minutes) {
         fareCalculator(distance, minutes);
@@ -25,6 +26,7 @@ public class Fare {
      * @param minutes -> The amount of time taken for the ride.
      */
     private void fareCalculator(double distance, double minutes) {
+        totalRides++;
         int MIN_FARE = 5;
         int PER_MINUTE = 1;
         totalFare += ((distance * 10) + (PER_MINUTE * minutes) + MIN_FARE);
@@ -46,5 +48,13 @@ public class Fare {
      */
     public double getTotalFare() {
         return totalFare;
+    }
+
+    /**
+     *
+     * @return -> Total number of rides of the user.
+     */
+    public int getTotalRides() {
+        return totalRides;
     }
 }
