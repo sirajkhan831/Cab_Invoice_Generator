@@ -15,7 +15,7 @@ public class TestCases {
     public void whenGivenMultipleRides_ifRequiredFarePerRide_shouldReturnEqual() {
         Fare fare = new Fare(2,0);
         Assert.assertEquals(fare.getTotalFare(),25,0.5);
-        Assert.assertEquals(fare.bookCab(4,2),46,0.5);
+        Assert.assertEquals(fare.bookCab(4,2),47,0.5);
     }
 
     @Test

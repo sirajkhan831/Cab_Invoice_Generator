@@ -11,7 +11,6 @@ public class Fare {
      * This program generates fares for Cabs
      */
     private double totalFare;           // Stores the total fare for all the ride combined.
-    private double fare;
     private int totalRides;
 
     public Fare(double distance, double minutes) {
@@ -30,7 +29,7 @@ public class Fare {
         totalRides++;
         int MIN_FARE = 5;
         int PER_MINUTE = 1;
-        fare = ((distance * 10) + (PER_MINUTE * minutes) + MIN_FARE);
+        double fare = ((distance * 10) + (PER_MINUTE * minutes) + MIN_FARE);
         totalFare += fare;
         return fare;
     }
