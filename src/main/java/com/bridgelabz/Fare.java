@@ -32,6 +32,16 @@ public class Fare {
 
     /**
      *
+     * @param distance -> The amount of distance travelled by the customer per ride.
+     * @param minutes -> The amount of time taken for the ride.
+     * Created to add fares for multiple rides of the customer
+     */
+    public void bookCab(double distance, double minutes){
+        fareCalculator(distance, minutes);
+    }
+
+    /**
+     *
      * @return total combined fare for all the rides of customer.
      */
     public double getTotalFare() {
