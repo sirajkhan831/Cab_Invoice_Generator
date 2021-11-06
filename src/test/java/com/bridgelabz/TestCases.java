@@ -3,6 +3,8 @@ package com.bridgelabz;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.*;
+
 public class TestCases {
 
     @Test
@@ -46,5 +48,19 @@ public class TestCases {
     public void whenGivenPremiumRide_shouldReturnEqual() {
         Fare fare = new Fare(5, 4, true);
         Assert.assertEquals(fare.getFare(), 103, 0.1);
+    }
+
+    @Test
+    public void whenGivenUserID_ifRequiredTotalRides_shouldReturnEqual() throws SQLException {
+        Fare fare = new Fare(46, 20);
+        String userID = "2";
+        Assert.assertEquals(4,fare.getUserTotalRides(userID));
+    }
+
+    @Test
+    public void whenGivenUserID_ifRequiredAverageFare_shouldReturnEqual() throws SQLException{
+        Fare fare = new Fare(21,22);
+        String userID = "3";
+        Assert.assertEquals(1018,fare.getUserAverageFare(userID));
     }
 }
