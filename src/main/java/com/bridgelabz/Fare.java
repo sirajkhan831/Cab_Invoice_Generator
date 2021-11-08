@@ -40,7 +40,7 @@ public class Fare {
             PER_MINUTE = 2;
             PER_KM = 15;
         }
-        fare = ((distance * PER_KM) + (PER_MINUTE * minutes) + MIN_FARE);
+        fare = Math.max(((distance * PER_KM) + (PER_MINUTE * minutes)), MIN_FARE);
         totalFare += fare;
     }
 
@@ -54,15 +54,14 @@ public class Fare {
     }
 
     /**
-     *
-     * @param fare -> Current fare of the registered user
+     * @param fare   -> Current fare of the registered user
      * @param userID -> user ID of the registered user
      * @throws SQLException -
      */
     public void userRepository(Fare fare, String userID) throws SQLException {
         boolean columnExists = false;
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Cab", "siraj", "password");
-        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM Cab WHERE PersonID = ?");
+        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM Cab WHERE UserID = ?");
         selectStatement.setString(1, userID);
         ResultSet set = selectStatement.executeQuery();
         set.next();
@@ -77,15 +76,15 @@ public class Fare {
             PreparedStatement alterStatement = connection.prepareStatement("ALTER TABLE Cab ADD COLUMN Ride" + rideNumber + " int null");
             alterStatement.execute();
         }
-        PreparedStatement updateFareStatement = connection.prepareStatement("UPDATE Cab SET Ride" + rideNumber + " = ? WHERE PersonID = ?");
+        PreparedStatement updateFareStatement = connection.prepareStatement("UPDATE Cab SET Ride" + rideNumber + " = ? WHERE UserID = ?");
         updateFareStatement.setString(1, Double.toString(fare.getTotalFare()));
         updateFareStatement.setString(2, userID);
         updateFareStatement.execute();
-        PreparedStatement updateTotalRidesStatement = connection.prepareStatement("UPDATE Cab SET TotalRides = ? WHERE PersonID = ?");
+        PreparedStatement updateTotalRidesStatement = connection.prepareStatement("UPDATE Cab SET TotalRides = ? WHERE UserID = ?");
         updateTotalRidesStatement.setString(1, rideNumber);
         updateTotalRidesStatement.setString(2, userID);
         updateTotalRidesStatement.execute();
-        PreparedStatement updateAverageFareStatement = connection.prepareStatement("UPDATE Cab SET AverageFare = ? WHERE PersonID = ?");
+        PreparedStatement updateAverageFareStatement = connection.prepareStatement("UPDATE Cab SET AverageFare = ? WHERE UserID = ?");
         double averageFare = ((set.getDouble("AverageFare")) + (fare.getTotalFare()) / 2);
         updateAverageFareStatement.setString(1, Double.toString(averageFare));
         updateAverageFareStatement.setString(2, userID);
@@ -99,7 +98,7 @@ public class Fare {
      */
     public int getUserTotalRides(String userID) throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Cab", "siraj", "password");
-        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM Cab WHERE PersonID = ?");
+        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM Cab WHERE UserID = ?");
         selectStatement.setString(1, userID);
         ResultSet set = selectStatement.executeQuery();
         set.next();
@@ -113,7 +112,7 @@ public class Fare {
      */
     public int getUserAverageFare(String userID) throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Cab", "siraj", "password");
-        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM Cab WHERE PersonID = ?");
+        PreparedStatement selectStatement = connection.prepareStatement("SELECT * FROM Cab WHERE UserID = ?");
         selectStatement.setString(1, userID);
         ResultSet set = selectStatement.executeQuery();
         set.next();
